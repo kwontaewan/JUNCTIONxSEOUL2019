@@ -94,11 +94,12 @@ class LoginVC: UIViewController {
             .disposed(by: disposeBag)
         
         loginViewModel.loginResponse
-            .subscribe(onNext: { (response) in
+            .subscribe(onNext: { [unowned self] (response) in
                 switch response {
                 case .Success(let authToken):
                     debugPrint("auth \(authToken)")
                     AppSessionManager.setAuthToken(authToken: authToken.refresh)
+                    self.switchRootView()
                 case .Error(let error):
                     debugPrint("error \(error)")
                 }
@@ -106,8 +107,18 @@ class LoginVC: UIViewController {
         
     }
     
+    func switchRootView() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let mainViewController = storyboard.instantiateViewController(withIdentifier: "MainNavigationVC") as? UINavigationController
+        UIApplication.shared.delegate?.window??.rootViewController = mainViewController
+    }
+    
     @objc func handleDissMiss(_ sender: UITapGestureRecognizer) {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    deinit {
+        debugPrint("LoginVC deinit")
     }
     
 }
