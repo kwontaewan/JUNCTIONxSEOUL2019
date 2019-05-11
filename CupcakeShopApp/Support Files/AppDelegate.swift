@@ -34,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FirebaseApp.configure()
 
-        GMSPlacesClient.provideAPIKey("AIzaSyB0UKGXtQfOyquCrkImE_OI_7t0gGAwcOs")
+    
         
         // [START set_messaging_delegate]
         Messaging.messaging().delegate = self
