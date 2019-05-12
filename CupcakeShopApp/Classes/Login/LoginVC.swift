@@ -98,7 +98,8 @@ class LoginVC: UIViewController {
                 switch response {
                 case .Success(let authToken):
                     debugPrint("auth \(authToken)")
-                    AppSessionManager.setAuthToken(authToken: authToken.refresh)
+                    AppSessionManager.setAuthToken(authToken: authToken.access)
+                    AppSessionManager.setRefreshToken(authToken: authToken.refresh)
                     self.switchRootView()
                 case .Error(let error):
                     debugPrint("error \(error)")

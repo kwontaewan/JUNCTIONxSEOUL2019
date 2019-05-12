@@ -10,4 +10,10 @@ import UIKit
 
 class ProductCell: UICollectionViewCell {
     
+    @IBOutlet weak var productImageView: BorderUIImageView!
+    
+    @IBOutlet weak var productNameLabel: UILabel!
+    
+    @IBOutlet weak var priceLabel: UILabel!
+    
 }

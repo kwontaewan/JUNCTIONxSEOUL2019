@@ -11,16 +11,16 @@ import UIKit
 
 struct ShopInfo {
     
-    let shopImage: UIImage
-    
     let shopTitle: String
     
     let shopAddress: String
     
-    init(shopImage: UIImage, shopTitle: String, shopAddress: String) {
-        self.shopImage = shopImage
+    let idx: Int
+    
+    init(shopTitle: String, shopAddress: String, idx: Int) {
         self.shopTitle = shopTitle
         self.shopAddress = shopAddress
+        self.idx = idx
     }
     
 }

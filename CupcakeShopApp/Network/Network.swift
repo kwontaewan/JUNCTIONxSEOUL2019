@@ -70,11 +70,13 @@ final class Network: Networking {
             
             //var keyStoreError: NSError?
             
-            let authToken = AppSessionManager.getSessionToken()
+            let refresh = AppSessionManager.getRefreshToken()
             
-            if let authToken = authToken {
+            let authToken = AppSessionManager.getAuthToken()
+            
+            if let authToken = authToken, let refresh = refresh {
                 
-                let headers: HTTPHeaders = ["Authorization": "refresh \(authToken)"]
+                let headers: HTTPHeaders = ["Authorization": authToken, "refresh": refresh]
                 
                 debugPrint(headers)
                 
@@ -126,11 +128,13 @@ final class Network: Networking {
             
             var request: DataRequest
             
-            let authToken = AppSessionManager.getSessionToken()
+            let refresh = AppSessionManager.getRefreshToken()
             
-            if let authToken = authToken {
+            let authToken = AppSessionManager.getAuthToken()
             
-                let headers: HTTPHeaders = ["Authorization": "refresh \(authToken)"]
+            if let authToken = authToken, let refresh = refresh {
+                
+                let headers: HTTPHeaders = ["Authorization": authToken, "refresh": refresh]
             
                 if method == .get {
                     request = self.alamoFireManager!.request(self.baseUrl+url, method: method, parameters: parameters, headers: headers)
@@ -208,11 +212,13 @@ final class Network: Networking {
             
             var request: DataRequest
             
-            let authToken = AppSessionManager.getSessionToken()
+            let refresh = AppSessionManager.getRefreshToken()
             
-            if let authToken = authToken {
+            let authToken = AppSessionManager.getAuthToken()
+            
+            if let authToken = authToken, let refresh = refresh {
                 
-                let headers: HTTPHeaders = ["Authorization": "refresh \(authToken)"]
+                let headers: HTTPHeaders = ["Authorization": authToken, "refresh": refresh]
                 
                 if method == .get {
                     request = self.alamoFireManager!.request(self.baseUrl+url, method: method, parameters: parameters, headers: headers)
@@ -231,7 +237,7 @@ final class Network: Networking {
             }
             
             request.debugLog()
-                .validate()
+                .validate(statusCode: 200..<300)
                 .responseData(queue: self.queue) { response in
                     switch response.result {
                     case .success(let value):
